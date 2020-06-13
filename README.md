@@ -1,70 +1,220 @@
-# Recuperação de senha
+**API de Autenticação COM JWT TOKEN**
 
-**RF**
+# Description
 
-- o usuário deve poder recuperar sua senha informando o seu e-mail;
-- o usuário deve receber um e-mail com instruções de recuperação de senha;
-- o usuário deve poder resetar sua senha;
+ - API de autenticação com JWT TOKEN
 
-**RNF**
+ * TYPEORM
+ * Cache Information REDIS (Not used but ready to use)
+ * Notifications (Not used but ready for use with MONGO DB)
+ * Configured for use with Amazom Web Services
 
-- Utilizar Mailtrap para testar envios em ambiente de dev;
-- Utilizar Amazon SES para envios em produção;
-- O envio de e-mails deve acontecer em segundo plano (background job);
+# In production
+ - Avatar upload with AWS S3
+ - Sending emails with AWS SES
 
-**RN**
+# In development environment
+ - Avatar upload with disk
+ - Sending emails with Ethereal (https://ethereal.email)
 
-- o link enviado por email para resetar senha, deve expirar em 2h;
-- o usuário precisa confirmar a nova senha ao resetar sua senha;
+# How to use
+  Configure to environment variables .env (a .env.example)
 
-# Atualização do perfil
+  Install all dependences
 
-**RF**
+  `$ yarn`
 
-- O usuário deve poder atualizar seu nome, email e senha;
+  Create `ormconfig.json` a ormexample.json
 
-**RN**
+  Start to Dev Server
+ - yarn dev:server
 
-- O usuário não pode alterar seu email para um e-mail já utilizado;
-- Para atualizar sua senha, o usuário deve informar a senha antiga;
-- Para atualizar sua senha, o usuário precisa confirmar a nova senha;
+ # Exec tests
 
-# Painel do prestador
-
-**RF**
-
-- O usuário deve poder listar seus agendamentos de um dia específico;
-- O prestador deve receber uma notificação sempre que houver um novo agendamento;
-- O prestador deve poder visualizar as notificaões não lidas;
-
-**RNF**
-
-- Os agendamentos do prestador no dia devem ser armazenados em cache;
-- As notificações do prestador devem ser armazenadas no MongoDB;
-- As notificações do prestador devem ser enviadas em tempo-real utilizando o Socket.io;
-
-**RN**
-
-- A notificação deve ter um status de lida ou não-lida para que o prestador possa controlar;
-
-# Agendamento de serviços
-
-**RF**
-
-- O usuário deve poder listar todos os prestadores de serviço cadastrados;
-- O usuário deve poder listar os dias de um mês com pelo menos um horário disponível de um prestador;
-- O usuário deve poder listar horários disponíveis em um dia especifico de um prestador
-- O usuário deve poder realizar um novo agendamento com um prestador;
-
-**RNF**
-
-- A listagem de prestadores deve ser armazenada em cache;
+ - yarn test
 
 
-**RN**
 
-- Cada agendamento deve durar 1h exatamente;
-- Os agendamentos deve estar disponíveis entre 8h ás 18h (Primeiro às 8h, último às 17h);
-- O usuáro não pode agendar em um horário já ocupado;
-- O usuário não pode agendar em um horário que já passou;
-- O usuário não pode agender serviços consigo mesmo;
+
+# REST API JWT autenticate
+
+API de autenticação com JWT TOKEN
+
+Configurations of variable environments `.env` file.
+
+`ormconfig.json` is a configuration to TYPEORM (PostgresSQL and MongoDB).
+Use `ormconfig.example.json`
+
+It uses `$ yarn typeorm run:migrations` to execute migrations
+
+## Install dependences
+
+    yarn
+
+## Run the app dev
+
+    yarn dev:server
+
+## Run the tests
+
+    yarn test
+
+# REST API
+
+The REST API to the example app is described below.
+
+
+### Request
+## Create a new user
+
+`POST /users/`
+
+      {
+      "name": "User Example",
+      "email": "user@example.com",
+      "password": "example"
+      }
+
+### Response
+
+    {
+      "name": "User Example",
+      "email": "user@example.com",
+      "id": "54ffd6c0-2aef-4448-852e-9701b851763d",
+      "created_at": "2020-06-05T08:00:24.226Z",
+      "updated_at": "2020-06-05T08:00:24.226Z",
+      "avatar_url": null
+    }
+
+## Create a new session
+
+### Request
+
+`POST /sessions/`
+
+    {
+      "email": "user@example.com",
+      "password": "example"
+    }
+
+### Response
+
+    {
+      "user": {
+      "id": "62a86215-609b-4668-b4d6-1f80589230ac",
+      "name": "Example",
+      "email": "user@example.com",
+      "avatar": null,
+      "created_at": "2020-04-27T08:19:27.854Z",
+      "updated_at": "2020-06-07T02:14:03.037Z",
+      "avatar_url": null
+    },
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTE1MTgzMDAsImV4cCI6MTU5MTYwNDcwMCwic3ViIjoiNjJhODYyMTUtNjA5Yi00NjY4LWI0ZDYtMWY4MDU4OTIzMGFjIn0.vMH9zdD143Y1OTIDY70eXI7DsLtO3xu6TvKU9uNP65w"
+    }
+
+## Upload Avatar
+
+### Request
+
+`PATCH /users/avatar`
+
+    Content-Type: multipart/form-data
+
+    {
+      avatar: FILE
+    }
+
+### Response
+
+    {
+      "id": "54ffd6c0-2aef-4448-852e-9701b851763d",
+      "name": "Example",
+      "email": "user@example.com",
+      "avatar": "b44adea164bd6e0c5d8f-avatar-test.png",
+      "created_at": "2020-06-05T08:00:24.226Z",
+      "updated_at": "2020-06-07T11:20:26.526Z",
+      "avatar_url": "http://localhost:3333/files/b44adea164bd6e0c5d8f-avatar-test.png"
+    }
+
+## Update Profile
+
+### Request
+
+`PUT /profile`
+
+      {
+      "name": "Example",
+      "email": "user@example.com",
+      "old_password": "example",
+      "password": "example123"
+      }
+
+### Response
+
+      {
+      "id": "54ffd6c0-2aef-4448-852e-9701b851763d",
+      "name": "Example",
+      "email": "user@example.com",
+      "avatar": "b44adea164bd6e0c5d8f-avatar-test.png",
+      "created_at": "2020-06-05T08:00:24.226Z",
+      "updated_at": "2020-06-07T11:20:26.526Z",
+      "avatar_url": "http://localhost:3333/files/b44adea164bd6e0c5d8f-avatar-test.png"
+      }
+
+## Show Profile
+
+### Request
+
+`GET /profile/`
+
+   no content
+
+### Response
+
+      {
+      "id": "54ffd6c0-2aef-4448-852e-9701b851763d",
+      "name": "Example",
+      "email": "user@example.com",
+      "avatar": "b44adea164bd6e0c5d8f-avatar-test.png",
+      "created_at": "2020-06-05T08:00:24.226Z",
+      "updated_at": "2020-06-07T11:20:26.526Z",
+      "avatar_url": "http://localhost:3333/files/b44adea164bd6e0c5d8f-avatar-test.png"
+      }
+
+## Forgot Password
+
+### Request
+
+`POST /password/forgot/`
+
+     {
+	    "email": "user@example.com"
+     }
+
+### Response
+
+  --
+
+## Change Password
+
+### Request
+
+`POST /password/reset`
+
+    {
+	    "password": "example123",
+	    "token": "521ba11f-d622-445b-a1fd-c193fd440dbd"
+    }
+
+### Response
+
+    HTTP/1.1 204 NO CONTENT
+
+
+# USE AWS
+
+Change .env to:
+
+STORAGE_DRIVER=s3 (Utilize AWS S3 to upload avatar images)
+MAIL_DRIVER=ses (Utilize AWS SES to mail sender)
+
