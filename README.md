@@ -27,14 +27,12 @@
   Create `ormconfig.json` a ormexample.json
 
   Start to Dev Server
- - yarn dev:server
+  
+   `$ yarn dev:server`
 
  # Exec tests
 
- - yarn test
-
-
-
+ `$ yarn test`
 
 # REST API JWT autenticate
 
@@ -49,15 +47,15 @@ It uses `$ yarn typeorm run:migrations` to execute migrations
 
 ## Install dependences
 
-    yarn
+    $ yarn
 
 ## Run the app dev
 
-    yarn dev:server
+    `$ yarn dev:server`
 
 ## Run the tests
 
-    yarn test
+    `$ yarn test`
 
 # REST API
 
@@ -217,4 +215,13 @@ Change .env to:
 
 STORAGE_DRIVER=s3 (Utilize AWS S3 to upload avatar images)
 MAIL_DRIVER=ses (Utilize AWS SES to mail sender)
+
+# USE REDIS CACHE
+
+
+
+# USE NOTIFICATIONS
+
+
+
 
