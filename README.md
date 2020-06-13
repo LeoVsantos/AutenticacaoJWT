@@ -2,7 +2,7 @@
 
 # Description
 
- - API de autenticação com JWT TOKEN
+ API de autenticação com JWT TOKEN
 
  * TYPEORM
  * Cache Information REDIS (Not used but ready to use)
