@@ -191,7 +191,7 @@ The REST API to the example app is described below.
 
 ### Response
 
-  --
+`HTTP/1.1 204 NO CONTENT`
 
 ## Change Password
 
@@ -214,6 +214,7 @@ The REST API to the example app is described below.
 Change .env to:
 
 STORAGE_DRIVER=s3 (Utilize AWS S3 to upload avatar images)
+
 MAIL_DRIVER=ses (Utilize AWS SES to mail sender)
 
 # USE REDIS CACHE
