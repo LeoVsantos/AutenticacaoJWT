@@ -1,4 +1,4 @@
-**API de Autenticação COM JWT TOKEN**
+**API de Autenticação COM JWT**
 
 # Description
 
