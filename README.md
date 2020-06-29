@@ -7,7 +7,7 @@
  * TYPEORM
  * Cache Information REDIS (Not used but ready to use)
  * Notifications (Not used but ready for use with MONGO DB)
- * Configured for use with Amazom Web Services
+ * Configured for use with Amazon Web Services
 
 # In production
  - Avatar upload with AWS S3
